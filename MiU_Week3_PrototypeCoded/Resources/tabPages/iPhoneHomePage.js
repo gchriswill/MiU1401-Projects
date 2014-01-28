@@ -1,14 +1,14 @@
+
 Ti.include("../BehaviorControllers/customClassesControls.js", "../BehaviorControllers/functionsControls.js","../jsonData.js");
 var currentWindowMac = Ti.UI.currentWindow;
 
-var backgroundView = creatingImageView("../tabsVideoImages/macPro_Tab.png", 320, 190, 0, null, null, null);
+var backgroundView = creatingImageView("../tabsVideoImages/iPhones5s_Tab.png", 320, 190, 0, null, null, null);
     backgroundView.backgroundColor = "#fff";
 
 if (Ti.Platform.name == "iPhone OS"){
-    var macHomeVideoView = creatingWebView( "http://www.youtube.com/embed/" + "IbWOQWw1wkM" + "?fs=1&autoplay=1",false, false, false, false, 320, 190, 0, null, null, null);
+    var macHomeVideoView = creatingWebView( "http://www.youtube.com/embed/" + "TJkmc8-eyvE" + "?fs=1&autoplay=1",false, false, false, false, 320, 190, 0, null, null, null);
     macHomeVideoView.opacity = 0.02;
     macHomeVideoView.zIndex = 3;
-    //macHomeVideoView.pluginState = 2;
     
     var playButtonView = creatingImageView("../tabsVideoImages/playButton.png", 72, 72, null, null, null, null);
     playButtonView.backgroundColor = "#fff";
@@ -21,7 +21,6 @@ if (Ti.Platform.name == "iPhone OS"){
 var macTableView = creatingAwholeTableView(jsonDataObject.iPhoneObject);
 
 macTableView.addEventListener("click", function(e){
-    //currentWindowMac.tabBar.navBarHidden = true;
     
     var detailWindow = creatingWindow("#000", null, 10, 10, "#fff", null);
     detailWindow.title = e.source.title;
@@ -54,6 +53,9 @@ macTableView.addEventListener("click", function(e){
         navWindow.open();
         navWindow.openWindow(detailWindow, {animate: true});
     }else{
+        price.color       = "#fff";
+        description.color = "#fff";
+        Specs.color       = "#fff";
         detailWindow.open();
     }
 });

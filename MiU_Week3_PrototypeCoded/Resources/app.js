@@ -1,6 +1,7 @@
 //Welcom to my source code. Built with a foundation of Objective-C classes's structures and a custom approach based on the Jekyll engine.
 //Feel free to try re-engineer this app, if you can! LOL!
 
+// Classes Library is held is the customClassesControls.js file with information of the classes structure...
 
 //Landing Page
 Ti.include("BehaviorControllers/functionsControls.js");

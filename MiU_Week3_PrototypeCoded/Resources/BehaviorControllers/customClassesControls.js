@@ -239,7 +239,23 @@ function creatinCurveAnimation(targetView, curveType, opacityValue, durationValu
 //End of Function Class #8: creatinCurveAnimation
 
 
-//Function Web View
+
+/* Function Class #9: creatingWebView
+ * 
+ * Function call's arguments Specified in the following order: 
+ * 1-URL path string
+ * 2-Zoom control enabler Boolean
+ * 3-Scale page to fit window or view boolean
+ * 4-Scroll to top of window or view boolean
+ * 5-Show scroll indicator bar boolean
+ * 6-Width value number or number-string
+ * 7-Height vaule number or number-string
+ * 8-Top position value number or number-string
+ * 9-Left position value number or number-string
+ * 10-Right position value number or number-string
+ * 11-Bottom position value number or number-string
+ *  
+ */
 function creatingWebView(urlWebPath, zoomControl, scalesToFit, toTop, showSbars, widthValue, heightValue, topValue, leftValue, rightValue, bottomValue){
     
     var universalWebView = Ti.UI.createWebView({
@@ -258,7 +274,7 @@ function creatingWebView(urlWebPath, zoomControl, scalesToFit, toTop, showSbars,
     
     return universalWebView;
 };
-
+//End of Function Class #9: creatingWebView
 
 
 

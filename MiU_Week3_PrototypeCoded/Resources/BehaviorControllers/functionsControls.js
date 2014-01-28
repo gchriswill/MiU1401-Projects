@@ -89,7 +89,7 @@ function creatingAwholeTableView(objectLoop){
                 storage     : objectLoop[n].data[i].storage,
                 inTheBox    : objectLoop[n].data[i].inTheBox,
                 ItemDescription : objectLoop[n].data[i].description
-                //navWindowID : navWindow
+                
                 
             });
             UniversalStableSection.add(UniversalTableRows);
