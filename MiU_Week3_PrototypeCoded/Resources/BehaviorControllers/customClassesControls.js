@@ -18,6 +18,7 @@ function alerstMsg1(string){
 
 
 // Function Class #1: createNavWindow (iOS specific function)- Accepts only argument, target window
+//Important NOTE: There is no reason to use the Navigation Window system due to in this current app development I'm using the Tab Group system for main navigation.
 function creatingNavWindow(openNewWindow){
     var universalNavWindow = Ti.UI.iOS.createNavigationWindow({
         window: openNewWindow

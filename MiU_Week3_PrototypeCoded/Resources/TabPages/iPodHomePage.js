@@ -1,13 +1,14 @@
 
 Ti.include("../BehaviorControllers/customClassesControls.js", "../BehaviorControllers/functionsControls.js","../jsonData.js");
-var currentWindowMac = Ti.UI.currentWindow;
+var mediaAndDataArray = ["../tabsVideoImages/iPodTouch_Tab.png", " ", jsonDataObject.iPodObject];
+var universalCurrentWindow = Ti.UI.currentWindow;
 
-var backgroundView = creatingImageView("../tabsVideoImages/iPodTouch_Tab.png", 320, 190, 0, null, null, null);
+var backgroundView = creatingImageView(mediaAndDataArray[0], 320, 190, 0, null, null, null);
     backgroundView.backgroundColor = "#fff";
 
-var macTableView = creatingAwholeTableView(jsonDataObject.iPodObject);
+var universalHomeTableView = creatingAwholeTableView(mediaAndDataArray[2], true);
 
-macTableView.addEventListener("click", function(e){
+universalHomeTableView.addEventListener("click", function(e){
     
     var detailWindow = creatingWindow("#000", null, 10, 10, "#fff", null);
     detailWindow.title = e.source.title;
@@ -17,35 +18,51 @@ macTableView.addEventListener("click", function(e){
     thumbnail.backgroundTopCap = "100%";
     
     var price = creatingLabel(e.source.prices, "#333", "left", 16, "arial", Ti.UI.SIZE, 75, 10, null, 10, null);
-    
-    var scrollView = Ti.UI.createScrollView({
-        contentWidth: "100%",
-        contentHeight: "auto",
-        showVerticalScrollIndicator: true,
-        top: 90
+   
+         
+    var universalTableView = Ti.UI.createTableView({
+        scrollable : true,
+        showVerticalScrollIndicator : true,
+        top: 80
     });
-    var description = creatingLabel(e.source.ItemDescription, "#333", "left", 16, "arial", null, 150, 10, 10, 10, null);
-    var Specs = creatingLabel("\n" + e.source.colors + "\n \n" + e.source.software + "\n \n" + e.source.displaySize + "\n \n" + e.source.dimensions + "\n \n" + e.source.weight + "\n \n" + e.source.ports + "\n \n" + e.source.networks + "\n \n" + e.source.storage + "\n \n" + e.source.inTheBox, "#333", "left", 14, "arial", null, null, 150, 10, 10, null);
+    var sourceHolder = [e.source.ItemDescription, e.source.colors, e.source.software, e.source.displaySize, e.source.dimensions, e.source.weight, e.source.ports, e.source.networks, e.source.storage, e.source.inTheBox];
+    var universalTableViewData = [];
+    for (var i = 0, j =sourceHolder.length; i<j; i++){
+        
+        if (i == 0){
+            var universalLabelViewRow = creatingLabel("Overview: \n" + sourceHolder[i], "#333", "left", 16, "arial", null, "auto", 10, 10, 10, 10);
+        }else{
+            var universalLabelViewRow = creatingLabel(sourceHolder[i], "#333", "left", 16, "arial", null, "auto", 10, 10, 10, 10);
+        };
+        
+        var UniversalTableRows = Ti.UI.createTableViewRow({
+            touchEnabled: false,
+            height: "auto",
+            hasChild: false,
+        });
+        
+        UniversalTableRows.add(universalLabelViewRow);
+        universalTableViewData.push(UniversalTableRows);
+    };
+    universalTableView.setData(universalTableViewData);
     
-    scrollView.add(Specs);
-    scrollView.add(description);
-    
-    detailWindow.add(scrollView);
+    detailWindow.add(universalTableView);
     detailWindow.add(price);
     detailWindow.add(thumbnail);
-    if (Ti.Platform.name == "iPhone OS"){
-        detailWindow.backgroundColor = "#fff";
-        var navWindow = creatingNavWindow(currentWindowMac.tabBar);
+    detailWindow.backgroundColor = "#fff";
+    
+    universalCurrentWindow.sincleTab.open(detailWindow, {animate: true});
+
+    if (Ti.Platform.name !== "iPhone OS"){
         
-        navWindow.open();
-        navWindow.openWindow(detailWindow, {animate: true});
-    }else{
+        detailWindow.backgroundColor = "#000";
         price.color       = "#fff";
         description.color = "#fff";
         Specs.color       = "#fff";
-        detailWindow.open();
-    }
+    };
 });
 
-currentWindowMac.add(macTableView);
-currentWindowMac.add(backgroundView);//alert("You are in the iPod Page");
+universalCurrentWindow.add(universalHomeTableView);
+universalCurrentWindow.add(backgroundView);
+
+

@@ -1,9 +1,9 @@
 //Master View Controller 
-var featuredHomeWindow = creatingWindow("#fff", null, 0, 0, "#fff", "tabPages/featuredHomePage.js");
-var macPageWindow    = creatingWindow("#000", null, 0, 0, "#fff", "tabPages/macHomePage.js");
-var iPhonePageWindow = creatingWindow("#000", null, 0, 0, "#fff", "tabPages/iPhoneHomePage.js");
-var iPadPageWindow   = creatingWindow("#000", null, 0, 0, "#fff", "tabPages/iPadHomePage.js");
-var iPodPageWindow   = creatingWindow("#000", null, 0, 0, "#fff", "tabPages/iPodHomePage.js");
+var featuredHomeWindow = creatingWindow("#fff", null, 43, 0, "#fff", "tabPages/featuredHomePage.js");
+var macPageWindow    = creatingWindow("#000", null, 43, 0, "#fff", "tabPages/macHomePage.js");
+var iPhonePageWindow = creatingWindow("#000", null, 43, 0, "#fff", "tabPages/iPhoneHomePage.js");
+var iPadPageWindow   = creatingWindow("#000", null, 43, 0, "#fff", "tabPages/iPadHomePage.js");
+var iPodPageWindow   = creatingWindow("#000", null, 43, 0, "#fff", "tabPages/iPodHomePage.js");
 
 var tabsMaster = Ti.UI.createTabGroup({});
 tabsMaster.opacity = 0.0;
@@ -20,10 +20,16 @@ tabsMaster.addTab(macTab);
 tabsMaster.addTab(iPhoneTab);
 tabsMaster.addTab(iPadTab);
 tabsMaster.addTab(iPodTab);
+
 macPageWindow.tabBar = tabsMaster;
 iPhonePageWindow.tabBar = tabsMaster;
 iPadPageWindow.tabBar = tabsMaster;
 iPodPageWindow.tabBar = tabsMaster;
+
+macPageWindow.sincleTab = macTab;
+iPhonePageWindow.sincleTab = iPhoneTab;
+iPadPageWindow.sincleTab = iPadTab;
+iPodPageWindow.sincleTab = iPodTab;
 
 tabsMaster.open();
 landingView.close();

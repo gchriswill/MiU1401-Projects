@@ -1,26 +1,27 @@
-
 Ti.include("../BehaviorControllers/customClassesControls.js", "../BehaviorControllers/functionsControls.js","../jsonData.js");
-var currentWindowMac = Ti.UI.currentWindow;
+var mediaAndDataArray = ["../tabsVideoImages/macPro_Tab.png", "http://www.youtube.com/embed/" + "IbWOQWw1wkM" + "?fs=1&autoplay=1", jsonDataObject.macObject];
+var universalCurrentWindow = Ti.UI.currentWindow;
 
-var backgroundView = creatingImageView("../tabsVideoImages/macPro_Tab.png", 320, 190, 0, null, null, null);
+var backgroundView = creatingImageView(mediaAndDataArray[0], 320, 190, 0, null, null, null);
     backgroundView.backgroundColor = "#fff";
 
 if (Ti.Platform.name == "iPhone OS"){
-    var macHomeVideoView = creatingWebView( "http://www.youtube.com/embed/" + "IbWOQWw1wkM" + "?fs=1&autoplay=1",false, false, false, false, 320, 190, 0, null, null, null);
-    macHomeVideoView.opacity = 0.02;
-    macHomeVideoView.zIndex = 3;
+    var universalHomeVideoView = creatingWebView(mediaAndDataArray[1],false, false, false, false, 320, 190, 0, null, null, null);
+    universalHomeVideoView.opacity = 0.02;
+    universalHomeVideoView.zIndex = 3;
 
     var playButtonView = creatingImageView("../tabsVideoImages/playButton.png", 72, 72, null, null, null, null);
+    
     playButtonView.backgroundColor = "#fff";
     playButtonView.borderRadius = 37.5;
     playButtonView.opacity = 0.5;
-    currentWindowMac.add(macHomeVideoView);
+    universalCurrentWindow.add(universalHomeVideoView);
     backgroundView.add(playButtonView);
 };
 
-var macTableView = creatingAwholeTableView(jsonDataObject.macObject);
+var universalHomeTableView = creatingAwholeTableView(mediaAndDataArray[2], true);
 
-macTableView.addEventListener("click", function(e){
+universalHomeTableView.addEventListener("click", function(e){
     
     var detailWindow = creatingWindow("#000", null, 10, 10, "#fff", null);
     detailWindow.title = e.source.title;
@@ -30,37 +31,51 @@ macTableView.addEventListener("click", function(e){
     thumbnail.backgroundTopCap = "100%";
     
     var price = creatingLabel(e.source.prices, "#333", "left", 16, "arial", Ti.UI.SIZE, 75, 10, null, 10, null);
-    
-    var scrollView = Ti.UI.createScrollView({
-        contentWidth: "100%",
-        contentHeight: "auto",
-        showVerticalScrollIndicator: true,
+   
+         
+    var universalTableView = Ti.UI.createTableView({
+        scrollable : true,
+        showVerticalScrollIndicator : true,
         top: 90
     });
-    var description = creatingLabel(e.source.ItemDescription, "#333", "left", 16, "arial", null, 150, 10, 10, 10, null);
-    var Specs = creatingLabel("\n" + e.source.colors + "\n \n" + e.source.software + "\n \n" + e.source.displaySize + "\n \n" + e.source.dimensions + "\n \n" + e.source.weight + "\n \n" + e.source.ports + "\n \n" + e.source.networks + "\n \n" + e.source.storage + "\n \n" + e.source.inTheBox, "#333", "left", 14, "arial", null, null, 150, 10, 10, null);
+    var sourceHolder = [e.source.ItemDescription, e.source.colors, e.source.software, e.source.displaySize, e.source.dimensions, e.source.weight, e.source.ports, e.source.networks, e.source.storage, e.source.inTheBox];
+    var universalTableViewData = [];
+    for (var i = 0, j =sourceHolder.length; i<j; i++){
+        
+        if (i == 0){
+            var universalLabelViewRow = creatingLabel("Overview: \n" + sourceHolder[i], "#333", "left", 16, "arial", null, "auto", 10, 10, 10, 10);
+        }else{
+            var universalLabelViewRow = creatingLabel(sourceHolder[i], "#333", "left", 14, "arial", null, "auto", 10, 10, 10, 10);
+        };
+        if (Ti.Platform.name !== "iPhone OS"){
+        
+        detailWindow.backgroundColor = "#000";
+        
+        universalLabelViewRow.color = "#fff";
+        
+        };
+        var UniversalTableRows = Ti.UI.createTableViewRow({
+            touchEnabled: false,
+            height: "auto",
+            hasChild: false,
+        });
+        
+        UniversalTableRows.add(universalLabelViewRow);
+        universalTableViewData.push(UniversalTableRows);
+    };
+    universalTableView.setData(universalTableViewData);
     
-    scrollView.add(Specs);
-    scrollView.add(description);
-    
-    detailWindow.add(scrollView);
+    detailWindow.add(universalTableView);
     detailWindow.add(price);
     detailWindow.add(thumbnail);
-    if (Ti.Platform.name == "iPhone OS"){
-        detailWindow.backgroundColor = "#fff";
-        var navWindow = creatingNavWindow(currentWindowMac.tabBar);
-        
-        navWindow.open();
-        navWindow.openWindow(detailWindow, {animate: true});
-    }else{
-        price.color       = "#fff";
-        description.color = "#fff";
-        Specs.color       = "#fff";
-        detailWindow.open();
-    }
+    detailWindow.backgroundColor = "#fff";
+    
+    universalCurrentWindow.sincleTab.open(detailWindow, {animate: true});
+
+    
 });
 
-currentWindowMac.add(macTableView);
-currentWindowMac.add(backgroundView);
+universalCurrentWindow.add(universalHomeTableView);
+universalCurrentWindow.add(backgroundView);
 
 

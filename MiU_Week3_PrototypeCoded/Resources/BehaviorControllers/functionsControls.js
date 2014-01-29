@@ -7,7 +7,7 @@ function alerstMsg2(string){
     alert(string);
 };
 
-/* Custom Set Interval Function Timer for Landing page
+/* Custom Function Class: loadingTimer
  * 
  * Arguments Specified in the following order: 
  * 1-Target UI object view
@@ -18,7 +18,7 @@ function alerstMsg2(string){
  * 6- function call for next destination view  
  * 
  */
-//Function creates an iOS Navigation Window (navWindow) and the Featured Window (featuredHomeWindow)
+//Function sets a timer for opening the app home window on the landing page. Also, sets the loading indicator animation...
 
 function loadingTimer(target, counterStartPoint, counterPlus, counterStopConditionValue, givenSpeed, nextDestination){ 
     
@@ -55,11 +55,26 @@ function loadingTimer(target, counterStartPoint, counterPlus, counterStopConditi
     }, speeder);
 };
 
-//Custom Function Table View
-function creatingAwholeTableView(objectLoop){
+/* Custom Function Class: creatingAwholeTableView
+ * 
+ * Arguments Specified in the following order: 
+ * 1-Specific Object from the JSON data JS file and used to modify the whole table view
+ *
+ */
+//Function creates a Table View for use as template in all the Tab's Windows...
+function creatingAwholeTableView(objectLoop, rowHasChildAttribute){
+    
+    var searchBar = Titanium.UI.createSearchBar({
+        hintText: "Search Items",
+        showCancel:true,
+        height:43,
+        top:0,
+    });
+    
     
     var universalReadyTable = Ti.UI.createTableView({
         showVerticalScrollIndicator : true,
+        search: searchBar, 
         top: 190
     
     });
@@ -67,41 +82,38 @@ function creatingAwholeTableView(objectLoop){
     var universalSections = [];
     for (var n in objectLoop){
             var UniversalStableSection  = Ti.UI.createTableViewSection({
-            // headerTitle:  wwdcData[n].secTitle,
-            // footerTitle:  wwdcData[n].secFooter
+            
             });
             for (var i = 0, j = objectLoop[n].data.length; i < j; i++){
-            //var objectValue = objectLoop[n].data[i].title;
-            var UniversalTableRows = Ti.UI.createTableViewRow({
-                title: objectLoop[n].data[i].title,
-                hasChild: true,
-                
-                title       : objectLoop[n].data[i].title,
-                imageLogo   : objectLoop[n].data[i].imageLogo,
-                prices      : objectLoop[n].data[i].prices,
-                colors      : objectLoop[n].data[i].colors,
-                software    : objectLoop[n].data[i].software,
-                displaySize : objectLoop[n].data[i].displaySize,
-                dimensions  : objectLoop[n].data[i].dimensions,
-                weight      : objectLoop[n].data[i].weight,
-                ports       : objectLoop[n].data[i].ports,
-                networks    : objectLoop[n].data[i].networks,
-                storage     : objectLoop[n].data[i].storage,
-                inTheBox    : objectLoop[n].data[i].inTheBox,
-                ItemDescription : objectLoop[n].data[i].description
-                
-                
-            });
-            UniversalStableSection.add(UniversalTableRows);
-        };
-        universalSections.push(UniversalStableSection);
+            
+                var UniversalTableRows = Ti.UI.createTableViewRow({
+                    title: objectLoop[n].data[i].title,
+                    hasChild: rowHasChildAttribute,
+                    
+                    title       : objectLoop[n].data[i].title,
+                    imageLogo   : objectLoop[n].data[i].imageLogo,
+                    prices      : objectLoop[n].data[i].prices,
+                    colors      : objectLoop[n].data[i].colors,
+                    software    : objectLoop[n].data[i].software,
+                    displaySize : objectLoop[n].data[i].displaySize,
+                    dimensions  : objectLoop[n].data[i].dimensions,
+                    weight      : objectLoop[n].data[i].weight,
+                    ports       : objectLoop[n].data[i].ports,
+                    networks    : objectLoop[n].data[i].networks,
+                    storage     : objectLoop[n].data[i].storage,
+                    inTheBox    : objectLoop[n].data[i].inTheBox,
+                    ItemDescription : objectLoop[n].data[i].description
+                    
+                    
+                });
+                UniversalStableSection.add(UniversalTableRows);
+            };
+            universalSections.push(UniversalStableSection);
     };//End
     
     universalReadyTable.setData(universalSections);
     return universalReadyTable;
 };
-
-
 
 
 
