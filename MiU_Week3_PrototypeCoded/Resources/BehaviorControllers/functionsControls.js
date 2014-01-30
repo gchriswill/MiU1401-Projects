@@ -21,30 +21,36 @@ function alerstMsg2(string){
 //Function sets a timer for opening the app home window on the landing page. Also, sets the loading indicator animation...
 
 function loadingTimer(target, counterStartPoint, counterPlus, counterStopConditionValue, givenSpeed, nextDestination){ 
+    var ActivityIndicatorStyler;
     
+    var counter = counterStartPoint;
+    
+    var activityIndicator = Ti.UI.createActivityIndicator({
+        color: "#333",
+        font: {fontFamily: "arial", fontSize:26, fontWeight:"bold"},
+        message: "Loading...",
+        
+        bottom: 48,
+        height: "auto",
+        width: "auto"
+    });
     if (Ti.Platform.name == "iPhone OS"){
         Ti.UI.setBackgroundColor("#fff");
+        
+        activityIndicator.style = Ti.UI.iPhone.ActivityIndicatorStyle.DARK;
     }else{
         Ti.UI.setBackgroundColor("#000");
+        activityIndicator.style = Ti.UI.ActivityIndicatorStyle.DARK ;
+        //activityIndicator.width = "auto";
+        
     };
-    var counter = counterStartPoint;
-    var speeder = givenSpeed;
+    activityIndicator.show();
+    
+    landingView.add(activityIndicator);
     
     var timer = setInterval(function(){
             
         counter+=counterPlus;
-            
-        var matrix = Ti.UI.create2DMatrix();
-        matrix     = matrix.rotate(counter);
-            
-        var anime = Ti.UI.createAnimation({
-            transform : matrix,
-            duration : speeder,
-            autoreverse : false,
-            repeat : 0
-        });
-            
-        loadingIndicator.animate(anime);
         if (counter == counterStopConditionValue) {
             clearInterval(timer);
                     
@@ -52,40 +58,69 @@ function loadingTimer(target, counterStartPoint, counterPlus, counterStopConditi
             
             var homePage = require("BehaviorControllers/viewControllerEngine");    
         };
-    }, speeder);
+    }, givenSpeed);
 };
 
 /* Custom Function Class: creatingAwholeTableView
  * 
  * Arguments Specified in the following order: 
  * 1-Specific Object from the JSON data JS file and used to modify the whole table view
+ * 2-Row Has Child Attribute Value boolean
+ * 3-Array with index passed for media
+ * 4-Array with index passed for media
  *
  */
 //Function creates a Table View for use as template in all the Tab's Windows...
-function creatingAwholeTableView(objectLoop, rowHasChildAttribute){
+function creatingAwholeTableView(objectLoop, rowHasChildAttribute, mediaAndDataArrayPassed, mediaAndDataArrayPassedTwo){
     
     var searchBar = Titanium.UI.createSearchBar({
         hintText: "Search Items",
         showCancel:true,
-        height:43,
+        height:40,
         top:0,
     });
     
-    
     var universalReadyTable = Ti.UI.createTableView({
         showVerticalScrollIndicator : true,
-        search: searchBar, 
-        top: 190
+        search: searchBar,
+        scrollsToTop : true,
+        top: 0
     
     });
     
+    var backgroundView = creatingImageView(mediaAndDataArrayPassed, 320, 190, 0, null, null, null);
+    backgroundView.backgroundColor = "#fff";
+
+    if (Ti.Platform.name == "iPhone OS"){
+        if(mediaAndDataArrayPassedTwo !== " "){
+        var universalHomeVideoView = creatingWebView(mediaAndDataArrayPassedTwo,false, false, false, false, 320, 190, 0, null, null, null);
+        universalHomeVideoView.opacity = 0.02;
+        
+        var playButtonView = creatingImageView("../tabsVideoImages/playButton.png", 72, 72, null, null, null, null);
+        
+        playButtonView.backgroundColor = "#fff";
+        playButtonView.borderRadius = 37.5;
+        playButtonView.opacity = 0.5;
+        
+        backgroundView.add(playButtonView);
+        backgroundView.add(universalHomeVideoView);
+        };
+    };
+    
     var universalSections = [];
+    var UniversalStableSection1  = Ti.UI.createTableViewSection({
+        headerView : backgroundView,
+        footerTitle : "Featured Products"
+    });
+    universalSections.push(UniversalStableSection1);
+    
     for (var n in objectLoop){
-            var UniversalStableSection  = Ti.UI.createTableViewSection({
-            
+            var UniversalStableSection2  = Ti.UI.createTableViewSection({
+                
             });
-            for (var i = 0, j = objectLoop[n].data.length; i < j; i++){
             
+            for (var i = 0, j = objectLoop[n].data.length; i < j; i++){
+                
                 var UniversalTableRows = Ti.UI.createTableViewRow({
                     title: objectLoop[n].data[i].title,
                     hasChild: rowHasChildAttribute,
@@ -104,24 +139,15 @@ function creatingAwholeTableView(objectLoop, rowHasChildAttribute){
                     inTheBox    : objectLoop[n].data[i].inTheBox,
                     ItemDescription : objectLoop[n].data[i].description
                     
-                    
                 });
-                UniversalStableSection.add(UniversalTableRows);
+                UniversalStableSection2.add(UniversalTableRows);
             };
-            universalSections.push(UniversalStableSection);
+            universalSections.push(UniversalStableSection2);
     };//End
     
     universalReadyTable.setData(universalSections);
+    
     return universalReadyTable;
 };
-
-
-
-
-
-
-
-
-
 
 

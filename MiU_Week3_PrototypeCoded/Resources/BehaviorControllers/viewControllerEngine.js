@@ -1,4 +1,5 @@
 //Master View Controller 
+
 var featuredHomeWindow = creatingWindow("#fff", null, 43, 0, "#fff", "tabPages/featuredHomePage.js");
 var macPageWindow    = creatingWindow("#000", null, 43, 0, "#fff", "tabPages/macHomePage.js");
 var iPhonePageWindow = creatingWindow("#000", null, 43, 0, "#fff", "tabPages/iPhoneHomePage.js");
@@ -32,6 +33,8 @@ iPadPageWindow.sincleTab = iPadTab;
 iPodPageWindow.sincleTab = iPodTab;
 
 tabsMaster.open();
+
+
 landingView.close();
 
 
