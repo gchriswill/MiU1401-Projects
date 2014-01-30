@@ -81,9 +81,9 @@ function creatingAwholeTableView(objectLoop, rowHasChildAttribute, mediaAndDataA
     });
     
     var universalReadyTable = Ti.UI.createTableView({
-        showVerticalScrollIndicator : true,
+        showVerticalScrollIndicator: true,
         search: searchBar,
-        scrollsToTop : true,
+        scrollsToTop: true,
         top: 0
     
     });
