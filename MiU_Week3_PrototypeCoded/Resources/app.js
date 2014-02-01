@@ -21,5 +21,5 @@ if (Ti.Platform.name !== "iPhone OS"){
 };  
 landingView.open();
 
-
+Ti.API.info("hello World");
 
