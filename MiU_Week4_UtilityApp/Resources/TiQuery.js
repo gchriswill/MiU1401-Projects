@@ -1,7 +1,12 @@
 // "Ti.Query" is a Custom Titanium Module by Christopher "GchrisWill" Gonzalez... LOL!!!!!
+// Ti.Query version 1.1
+
+//Release Notes: Updated performance with more stability and improvements. More Function UI classes added, 1 Super Custom Class added and 2 Supper Custom Classes modified to fit app's structure needs... Enjoy!
+
+
 Ti.include("maindata.js");
 //Testing Include #2
-function alerstMsg1(string){
+function alertMsg1(string){
     alert(string);
 };
 
@@ -17,7 +22,9 @@ function alerstMsg1(string){
  * 7-creatingTab
  * 8-creatinCurveAnimation
  * 9-creatingWebView
- * 
+ * 10-creatingTableView
+ * 11-creatingSectionView
+ * 12-creatingTableRows
  * 
  * 
  * Custom Functions Classes Index
@@ -288,6 +295,87 @@ function creatingWebView(urlWebPath, zoomControl, scalesToFit, toTop, showSbars,
 //End of Function Class #9: creatingWebView
 
 
+/* Function Class #10: creatingTableView
+ * 
+ * Function call's arguments Specified in the following order: 
+ * 1-Show scroll Indicator value boolean
+ * 2-Search object 
+ * 3-Scroll to top feature with tap on menubar value boolean
+ * 4-Top value number
+ * 
+ *  
+ */
+function creatingTableView(scrollIndi, searchBarObject, scrollsToToTouchMenuBar, topValue){     
+    
+    var universalReadyTable = Ti.UI.createTableView({
+        showVerticalScrollIndicator: scrollIndi,
+        search: searchBarObject,
+        scrollsToTop: scrollsToToTouchMenuBar,
+        top: topValue
+    
+    });
+    
+    return universalReadyTable;
+    
+};   
+//End of Function Class #10: creatingTableView
+
+
+/* Function Class #11: creatingSectionView
+ * 
+ * Function call's arguments Specified in the following order: 
+ * 1-Section header title value string
+ * 2-Section footer title value string 
+ * 
+ *  
+ */
+function creatingSectionView(seactionHeadersPassed){
+    
+    var UniversalStableSection  = Ti.UI.createTableViewSection({
+        headerTitle: seactionHeadersPassed
+        
+    });
+    
+    return UniversalStableSection;
+    
+};
+//End of Function Class #11: creatingSectionView
+
+
+/* Function Class #12: creatingTableRows
+ * 
+ * Function call's arguments Specified in the following order: 
+ * 1-Row data title value string for using and passing
+ * 2-Row data year make value string for using and passing
+ * 3-Row data Model number value string for using and passing
+ * 4-Row data Model identifier value string for using and passing
+ * 5-Row has child built in feature value boolean 
+ * 
+ *  
+ */
+function creatingTableRows(dataTitle, dataYearMake, dataModelNumber, dataModelIdentifier, rowHasChild){
+    
+    var UniversalTableRows = Ti.UI.createTableViewRow({
+    title: dataTitle,
+    hasChild: rowHasChild,
+    
+    title           : dataTitle,
+    yearMake        : dataYearMake,
+    ModelNumber     : dataModelNumber,
+    ModelIdentifier : dataModelIdentifier
+                                    
+    });
+                                
+    return UniversalTableRows;
+                        
+};
+//End of Function Class #12: creatingTableRows
+
+
+
+//************************************************ Super Custom Classes Below **********************************************************************//
+
+
 /* Custom Function Class #1: loadingTimer
  * 
  * Arguments Specified in the following order: 
@@ -330,13 +418,13 @@ function loadingTimer(fileTarget, counterStartPoint, counterPlus, counterStopCon
             creatinCurveAnimation(landingWindow, Ti.UI.ANIMATION_CURVE_EASE_IN_OUT, 0.0, 1000);
             activityIndicator.hide();
             
-            var homeWindow = creatingWindow("#fff", null, null, null, "#fff", "homePage.js");
+            var homeWindow   = creatingWindow("#fff", null, null, null, "#fff", "homePage.js");
             var searchWindow = creatingWindow("#fff", null, null, null, "#fff", "searchPage.js");
             
-            var mainTabController = Ti.UI.createTabGroup({});
+            var mainTabController     = Ti.UI.createTabGroup({});
             mainTabController.opacity = 0.0;
             
-            var homeTab = creatingTab(homeWindow, "images/home_icon.png", "Home");
+            var homeTab   = creatingTab(homeWindow, "images/home_icon.png", "Home");
             var searchTab = creatingTab(searchWindow, "images/search_icon.png", "Search");
             
             mainTabController.addTab(homeTab);
@@ -345,15 +433,9 @@ function loadingTimer(fileTarget, counterStartPoint, counterPlus, counterStopCon
             creatinCurveAnimation(mainTabController, Ti.UI.ANIMATION_CURVE_EASE_IN_OUT, 1, 1000);
             mainTabController.open();
             
-            var AddButtomTop = Titanium.UI.createButton({
-                systemButton : Titanium.UI.iPhone.SystemButton.ADD
-            });
-            homeWindow.setRightNavButton(AddButtomTop);
         };
     }, givenSpeed);
 };
-
-
 
 
 /* Custom Function Class #2: creatingAwholeTableView
@@ -374,46 +456,79 @@ function creatingAwholeTableView(){//objectLoop1, objectLoop2, rowHasChildAttrib
         height:10,
         top:0,
     });
+
+    var tableViewReady = creatingTableView(true, searchBar, true, 0);
+ 
+    var sectionsHeaders     = ["Mac Section", "iPhone Section", "iPad Section", "iPod Section"];
+    var universalSections   = [];
+    sectionHeaderArrayIndex = 0;
     
-    var universalReadyTable = Ti.UI.createTableView({
-        showVerticalScrollIndicator: true,
-        search: searchBar,
-        scrollsToTop: true,
-        top: 0
-    
-    });
-    var sectionsHeaders = ["Mac Section", "iPhone Section", "iPad Section", "iPod Section"];
-    var universalSections = [];
-    sectionHeaderArrayIndex = 0; 
     for (var n in jsonDataObject){
-            var UniversalStableSection  = Ti.UI.createTableViewSection({
-                headerTitle: sectionsHeaders[sectionHeaderArrayIndex]
-            });
+            
+            var universalSectionBuilder = creatingSectionView(sectionsHeaders[sectionHeaderArrayIndex]);
+            
             sectionHeaderArrayIndex++;
             
             for (var a in jsonDataObject[n]){
-                //for (var i = 0, j = jsonDataObject[n][a].data.length; i < j; i++){
-                    
-                    var UniversalTableRows = Ti.UI.createTableViewRow({
-                        title: jsonDataObject[n][a].data.title,
-                        hasChild: true,
-                        
-                        title           : jsonDataObject[n][a].data.title,
-                        yearMake        : jsonDataObject[n][a].data.yearMake,
-                        ModelNumber     : jsonDataObject[n][a].data.ModelNumber,
-                        ModelIdentifier : jsonDataObject[n][a].data.ModelIdentifier
-                        
-                    });
-                    UniversalStableSection.add(UniversalTableRows);
-            };
                 
-            //};
-            universalSections.push(UniversalStableSection);
-    };//End
+                var universalTableRowsFucntion = creatingTableRows(jsonDataObject[n][a].data.title, jsonDataObject[n][a].data.yearMake, jsonDataObject[n][a].data.ModelNumber, jsonDataObject[n][a].data.ModelIdentifier, true);
+                
+                universalSectionBuilder.add.add(universalTableRowsFucntion);
+             
+            };//End of Second Loop
+            universalSections.push(universalSectionBuilder);
+            
+    };//End of First Loop
     
-    universalReadyTable.setData(universalSections);
+    tableViewReady.setData(universalSections);
     
-    return universalReadyTable;
+    return tableViewReady;
 };
 
 
+//Super Looper Custom Super Class item filter !!!! LOL! And the awesome part is that it works! Ready to jump to the next level!!! :-)
+
+//Important Note: Issue found and working hard to resolve it ASAP... 
+//Issue is identified due the custom while search loop through diferent kind of structures of JSON objects...
+//The loop does not identifies arrays inside the database through the final loop stage hunting for matches to match the text value string from input filed... 
+//Issue is 87% resolved and still working on it 24/7....
+function whileChase(textValuePassed){
+    var secureBreak = 0;
+    var matchesCount = 0;
+    
+    var dataRowHolder2 = [];
+    var tableViewReady2 = creatingTableView(true, null, true, 0);
+    var universalSectionBuilder2 = creatingSectionView("Matches");
+    
+    for (var n in jsonDataObject){
+        
+        for (var a in jsonDataObject[n]){
+            
+            while(textValuePassed == jsonDataObject[n][a].data.yearMake || textValuePassed == jsonDataObject[n][a].data.ModelNumber || textValuePassed == jsonDataObject[n][a].data.ModelIdentifier){
+                secureBreak++;
+                
+                if (textValuePassed == jsonDataObject[n][a].data.yearMake || textValuePassed == jsonDataObject[n][a].data.ModelNumber || textValuePassed == jsonDataObject[n][a].data.ModelIdentifier){
+                    
+                    var universalTableRowsFucntion2 = creatingTableRows(jsonDataObject[n][a].data.title, jsonDataObject[n][a].data.yearMake, jsonDataObject[n][a].data.ModelNumber, jsonDataObject[n][a].data.ModelIdentifier, true);
+                    universalSectionBuilder2.add(universalTableRowsFucntion2);
+                    
+                    matchesCount++;
+                    
+                    break;
+                
+                }else if (secureBreak == 100){
+                    
+                    alert("Secure \"Kill\" System for Infinite Loop: Activated! \n Please try again...");
+                    break;
+                
+                };
+            };
+        };
+    };
+    
+    dataRowHolder2.push(universalSectionBuilder2);
+    tableViewReady2.setData(dataRowHolder2);
+    
+    alert("Search on database finish");
+    return tableViewReady2;
+};
