@@ -488,7 +488,8 @@ function creatingAwholeTableView(){//objectLoop1, objectLoop2, rowHasChildAttrib
 
 //Super Looper Custom Super Class item filter !!!! LOL! And the awesome part is that it works! Ready to jump to the next level!!! :-)
 
-//Important Note: Issue found and working hard to resolve it ASAP... 
+//Important Note: Issue found and working hard to resolve it ASAP...
+//Please keep in mind that this brand new super class is still on a experimental stage... 
 //Issue is identified due the custom while search loop through diferent kind of structures of JSON objects...
 //The loop does not identifies arrays inside the database through the final loop stage hunting for matches to match the text value string from input filed... 
 //Issue is 87% resolved and still working on it 24/7....
@@ -498,7 +499,7 @@ function whileChase(textValuePassed){
     
     var dataRowHolder2 = [];
     var tableViewReady2 = creatingTableView(true, null, true, 0);
-    var universalSectionBuilder2 = creatingSectionView("Matches");
+    var universalSectionBuilder2 = creatingSectionView("Matches Found");
     
     for (var n in jsonDataObject){
         
@@ -529,6 +530,6 @@ function whileChase(textValuePassed){
     dataRowHolder2.push(universalSectionBuilder2);
     tableViewReady2.setData(dataRowHolder2);
     
-    alert("Search on database finish");
+    alert("Finish searching the database...");
     return tableViewReady2;
 };
